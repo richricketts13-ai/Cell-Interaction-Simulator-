@@ -113,6 +113,15 @@ This project demonstrates how programming concepts like OOP, state management, a
 
 ⸻
 
+## Version 2
+- Introduced multi-cell simulation (3+ cells)
+- Implemented dynamic targeting system
+- Added removal of dead cells during simulation
+- Improved logging and round tracking
+
+
+
+
 🏁 Author
 
 Richard Ricketts
