@@ -1,31 +1,41 @@
-import java.util.Random;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 
 public class Main {
     public static void main(String[] args) {
 
+        int BacteriaWins = 0;
+        int ImmuneCellWins = 0;
+        int VirusWins = 0;
+
         Random RAND = new Random();
+
+        for (int sim = 1; sim <= 50; sim++) {
+
+       
+
+        List<Cell> cells = new ArrayList<>();
+
+        for (int i = 0; i < 3; ++i) {
+              cells.add(createRandomCell());
+       }
+       
+       int round = 1;
 
 
         try {
 
-        FileWriter writer = new FileWriter("simulation_log.txt");
+        FileWriter writer = new FileWriter("simulation_log.txt", true);
 
-       List<Cell> cells = new ArrayList<>();
-
-       for (int i = 0; i < 3; ++i) {
-              cells.add(createRandomCell());
-       }
-
-
-        int round = 1;
+        writer.write("Simulation " + sim + ":\n");
 
         while (cells.size() > 1) {
+
             System.out.println("Round " + round);
             writer.write("Round " + round + "\n");
             round++;
@@ -44,7 +54,7 @@ public class Main {
         performAction(cell, targetCell, RAND);
     }
 
-    // 2. Log deaths
+    
     for (Cell cell : cells) {
         if (!cell.isAlive()) {
 
@@ -53,7 +63,7 @@ public class Main {
         }
     }
 
-    // 3. Remove dead cells
+   
     for (int i = cells.size() - 1; i >= 0; i--) {
         if (!cells.get(i).isAlive()) {
             cells.remove(i);
@@ -78,6 +88,22 @@ if (cells.size() == 1) {
             System.out.println("An error occurred while writing to the file: " + e.getMessage());
             e.printStackTrace();
         }
+
+        if (cells.size() == 1) {
+            if (cells.get(0) instanceof Bacteria) {
+                BacteriaWins++;
+            } else if (cells.get(0) instanceof ImmuneCell) {
+                ImmuneCellWins++;
+            } else if (cells.get(0) instanceof Virus) {
+                VirusWins++;
+            }
+        }
+      }
+      
+        System.out.println("Simulation Results after 50 runs:");
+        System.out.println("Bacteria Wins: " + BacteriaWins + " (" + (BacteriaWins * 100 / 50) + "%)");
+        System.out.println("Immune Cell Wins: " + ImmuneCellWins + " (" + (ImmuneCellWins * 100 / 50) + "%)");
+        System.out.println("Virus Wins: " + VirusWins + " (" + (VirusWins * 100 / 50) + "%)");
     }
 
 
