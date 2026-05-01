@@ -120,6 +120,15 @@ This project demonstrates how programming concepts like OOP, state management, a
 - Improved logging and round tracking
 
 
+## Version 3 – Multi-Simulation & Statistics
+
+- Added support for running multiple simulations (e.g., 50 runs)
+- Implemented win tracking for each cell type (Bacteria, Immune Cell, Virus)
+- Introduced statistical output to compare outcomes across simulations
+- Improved logging to track results across multiple runs
+
+This version transforms the project from a single simulation into a basic experimental system, allowing analysis of which cell types perform best over time.
+
 
 
 🏁 Author
