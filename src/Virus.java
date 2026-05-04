@@ -17,13 +17,58 @@ public class Virus extends Cell {
 
         int increase = newToxicity - currentToxicity;
 
-         
-
         setToxicity(newToxicity);
         
         System.out.println(this.getName() + " mutates and increases toxicity by " + increase + " to " + newToxicity);
-       
     
     }
     
+
+    @Override
+    public void performAction(Cell targetCell) {
+
+       if (targetCell.getCellHealth() <= getToxicity()) {
+
+        interact(targetCell);
+        System.out.println(getName() + " finishes off " + targetCell.getName());
+       } 
+       else if (getToxicity() < 20) {
+
+           mutate();
+           System.out.println(getName() + " mutates to increase toxicity.");
+       } else {
+
+        interact(targetCell);
+        System.out.println(getName() + " attacks " + targetCell.getName());
+       }
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

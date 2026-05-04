@@ -1,3 +1,5 @@
+
+
 public class Cell {
 
    // Fields
@@ -38,6 +40,16 @@ public class Cell {
 
     
        }
+
+
+
+       public void performAction (Cell targetCell) {}   
+
+
+
+
+
+
 
 
        public void regenerate(int amount) {
@@ -101,6 +113,24 @@ public class Cell {
     public void setCellHealth(int cellHealth) {
         this.cellHealth = cellHealth;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

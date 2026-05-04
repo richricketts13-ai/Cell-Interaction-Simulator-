@@ -17,14 +17,14 @@ public class Main {
 
         for (int sim = 1; sim <= 50; sim++) {
 
-       
-
         List<Cell> cells = new ArrayList<>();
 
         for (int i = 0; i < 3; ++i) {
+
               cells.add(createRandomCell());
        }
        
+
        int round = 1;
 
 
@@ -32,9 +32,11 @@ public class Main {
 
         FileWriter writer = new FileWriter("simulation_log.txt", true);
 
-        writer.write("Simulation " + sim + ":\n");
+        writer.write("\n======== Simulation " + sim + ":\n");
 
-        while (cells.size() > 1) {
+       
+
+        while (cells.size() > 1 && round <= 100) {
 
             System.out.println("Round " + round);
             writer.write("Round " + round + "\n");
@@ -51,7 +53,7 @@ public class Main {
                        targetCell = cells.get(RAND.nextInt(cells.size()));
                     }
 
-        performAction(cell, targetCell, RAND);
+        cell.performAction(targetCell);
     }
 
     
@@ -66,16 +68,25 @@ public class Main {
    
     for (int i = cells.size() - 1; i >= 0; i--) {
         if (!cells.get(i).isAlive()) {
+
             cells.remove(i);
         }
     }
+
 
     for (Cell cell : cells) {
         System.out.println(cell.getName() + " has " + cell.getCellHealth() + " integrity");
         writer.write(cell.getName() + " has " + cell.getCellHealth() + " integrity\n");
     }
+
     System.out.println();
     writer.write("\n");
+}
+
+
+if (round > 100) {
+    System.out.println("Maximum rounds reached. Ending simulation.");
+    writer.write("Maximum rounds reached. Ending simulation.\n");
 }
 
 if (cells.size() == 1) {
@@ -125,62 +136,9 @@ if (cells.size() == 1) {
         }
         return cell;
     }
+ }
+    
 
-
-
-
-
-
-    public static void performAction(Cell cell, Cell targetCell, Random RAND) {
-
-    int maxHealth = cell.getMaxCellHealth();
-
-    if (cell.getCellHealth() < maxHealth * 0.3) {
-        switch (cell) {
-            case Bacteria bacteria -> {
-                bacteria.replicate();
-                System.out.println("" + cell.getName() + " is low on integrity and replicates to heal itself");
-                return;
-            }
-            case ImmuneCell immuneCell -> {
-                immuneCell.immuneResponse();
-                System.out.println("" + cell.getName() + " is low on integrity and initiates an immune response to heal itself");
-                return;
-            }
-            case Virus virus -> {
-                virus.mutate();
-                System.out.println("" + cell.getName() + " is low on integrity and mutates to adapt");
-                return;
-            }
-            default -> {
-            }
-        }
-    } else {
-        switch (RAND.nextInt(3) + 1) {
-            case 1 -> cell.interact(targetCell);
-            case 2 -> cell.adapt();
-            case 3 -> {
-            switch (cell) {
-                case Bacteria bacteria -> {
-                    bacteria.replicate();
-                    System.out.println("" + cell.getName() + " performs a regular replication to maintain integrity");
-                }
-                case ImmuneCell immuneCell -> {
-                    immuneCell.immuneResponse();
-                    System.out.println("" + cell.getName() + " initiates an immune response to maintain integrity");
-                }
-                case Virus virus -> {
-                    virus.mutate();
-                    System.out.println("" + cell.getName() + " mutates to adapt");
-                }
-                default -> {
-                }
-            }
-            }
-        }
-        System.out.println(cell.getName() + " performs an action");
-    }
-}
 
     
 
@@ -194,7 +152,7 @@ if (cells.size() == 1) {
 
 
 
-        }  
+        
 
      
 
