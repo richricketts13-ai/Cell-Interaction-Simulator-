@@ -126,10 +126,12 @@ if (cells.size() == 1) {
         int rand = (int)(Math.random() * 3) + 1;
         Cell cell = null;
 
+        Personality personality = Personality.values()[new Random().nextInt(Personality.values().length)];
+
         switch (rand) {
-            case 1 -> cell = new Bacteria("Bacteria", 10, 10);
-            case 2 -> cell = new ImmuneCell("Immune Cell", 15, 5);
-            case 3 -> cell = new Virus("Virus", 20, 7);
+            case 1 -> cell = new Bacteria("Bacteria", 10, 10, personality);
+            case 2 -> cell = new ImmuneCell("Immune Cell", 15, 5, personality);
+            case 3 -> cell = new Virus("Virus", 20, 7, personality);
         }
         if (cell != null) {
             System.out.println("Created " + cell.getName() + " with " + cell.getCellHealth() + " integrity and " + cell.getToxicity() + " toxicity");

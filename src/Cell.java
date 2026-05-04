@@ -8,13 +8,15 @@ public class Cell {
     private double resistance = 1.0;
     private int toxicity;
     private final int maxCellHealth;
+    protected Personality personality;
 
     //Constructor
-    public Cell(String name, int cellHealth, int toxicity) {
+    public Cell(String name, int cellHealth, int toxicity, Personality personality) {
         this.name = name;
         this.cellHealth = cellHealth;
         this.toxicity = toxicity;
         this.maxCellHealth = cellHealth;
+        this.personality = personality;
     }
 
     //Methods
@@ -97,6 +99,9 @@ public class Cell {
         return toxicity;
     }
 
+    public Personality getPersonality() {
+        return personality;
+    }
 
 
 

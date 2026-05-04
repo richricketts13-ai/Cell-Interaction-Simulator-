@@ -1,8 +1,8 @@
 public class ImmuneCell extends Cell {
    
     // Constructor
-    public ImmuneCell(String name, int cellHealth, int toxicity) {
-        super(name, cellHealth, toxicity);
+    public ImmuneCell(String name, int cellHealth, int toxicity, Personality personality) {
+        super(name, cellHealth, toxicity, personality);
     }
 
     // Methods
@@ -12,12 +12,44 @@ public class ImmuneCell extends Cell {
 
     }
 
+    
     @Override
-    public void performAction(Cell targetCell) {
+      public void performAction(Cell targetCell) {
 
         int maxHealth = this.getMaxCellHealth();
 
-        if (this.getCellHealth() < maxHealth * 0.5) {
+        Personality currentPersonality = this.getPersonality();
+
+        if (currentPersonality == Personality.AGGRESSIVE) {
+
+            if (targetCell.getCellHealth() > targetCell.getMaxCellHealth() * 0.6) {
+                interact(targetCell);
+            } else if (this.getCellHealth() < maxHealth * 0.4) {
+                immuneResponse();
+            }
+            else if (targetCell.getCellHealth() < this.getToxicity()) {
+                interact(targetCell);
+                System.out.println(this.getName() + " aggressively attacks " + targetCell.getName() + " which is critically low on integrity.");
+                
+            } else {
+                adapt();
+                System.out.println("" + this.getName() + " adapts aggressively.");
+            }   
+
+        } else if (currentPersonality == Personality.DEFENSIVE) {
+
+            if (this.getCellHealth() < maxHealth * 0.6) {
+                immuneResponse();
+            } else if (targetCell.getCellHealth() < targetCell.getMaxCellHealth() * 0.4) {
+                interact(targetCell);
+            } else {
+                adapt();
+                System.out.println("" + this.getName() + " adapts defensively.");
+            }
+
+        } else if (currentPersonality == Personality.NEUTRAL) {
+
+            if (this.getCellHealth() < maxHealth * 0.5) {
             immuneResponse();
             System.out.println("" + this.getName() + " is low on integrity and initiates an immune response to heal itself");
         }
@@ -30,9 +62,14 @@ public class ImmuneCell extends Cell {
             System.out.println("" + this.getName() + " adapts cautiously.");
         }
     }   
+}
+              
 
+        
 
+        
+    }
 
 
     
-}
+
